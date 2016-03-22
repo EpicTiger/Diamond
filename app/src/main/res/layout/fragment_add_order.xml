@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:paddingTop="?attr/actionBarSize"
+        android:padding="@dimen/activity_horizontal_margin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="72dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/fragment_add_product_textview_labeldate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="72dp"
+                android:text="@string/Date"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/fragment_add_product_textview_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/white"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/fragment_add_order_button_date"
+            android:layout_width="72dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_date_range_black_48dp"/>
+
+    </FrameLayout>
+
+    <ListView
+        android:id="@+id/fragment_add_order_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@drawable/divider"
+        android:dividerHeight="1dp"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:layout_marginTop="72dp"
+        android:clipToPadding="false"
+        android:paddingBottom="88dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fragment_add_product_floatingactionbutton_add"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/ic_add_white_24dp"
+            />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fragment_add_product_floatingactionbutton_done"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/ic_done_white_24dp"/>
+
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

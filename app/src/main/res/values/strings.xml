@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Diamonds</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- Nac drawer labels -->
+    <string name="Home">Home</string>
+    <string name="AddOrder">Add Order</string>
+    <string name="Orders">Orders</string>
+    <string name="Products">Products</string>
+    <string name="People">People</string>
+
+    <!-- list menu -->
+
+    <string name="menu_edit">Edit</string>
+    <string name="menu_delete">Delete</string>
+
+    <!-- Nav Drawer Strings -->
+    <string name="nav_fragment_home">HomeFragment</string>
+    <string name="nav_fragment_orders">OrderFragment</string>
+    <string name="nav_fragment_add_orders">AddOrderFragment</string>
+    <string name="nav_fragment_people">PeopleFragment</string>
+    <string name="nav_fragment_add_people">AddPeopleFragment</string>
+    <string name="nav_fragment_products">ProductsFragment</string>
+    <string name="nav_fragment_add_products">AddProductsFragment</string>
+    <string name="nav_fragment_add_people_to_orders">AddPeopleToOrderFragment</string>
+    <string name="nav_fragment_add_products_to_people">AddProductsToPeopleFragment</string>
+    <string name="Name">Name</string>
+    <string name="Price">Price</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Save">Save</string>
+    <string name="Date">Date</string>
+
+</resources>
