@@ -43,15 +43,12 @@ public class ProductsToPeopleAdapter extends ArrayAdapter<Product>
         if (product != null)
         {
             TextView name = (TextView) v.findViewById(R.id.fragment_add_products_to_people_list_item_textview_name);
-            TextView price = (TextView) v.findViewById(R.id.fragment_add_products_to_people_list_item_textview_price);
             TextView quantity = (TextView) v.findViewById(R.id.fragment_add_products_to_people_list_item_textview_quantity);
             Button less = (Button) v.findViewById(R.id.fragment_add_products_to_people_list_item_button_less);
             Button more = (Button) v.findViewById(R.id.fragment_add_products_to_people_list_item_button_more);
 
             if (name != null)
                 name.setText(product.getName());
-            if (price != null)
-                price.setText(product.getPriceString());
             if (quantity != null)
                 quantity.setText(product.getQuantitystring());
 

@@ -21,7 +21,6 @@ public class AddProductsToPeopleFragment extends BaseListFragment
     private People people;
     private List<Product> products;
 
-    @Nullable
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         super.onCreateView(inflater, container, savedInstanceState, R.layout.fragment_list, "Add Products");

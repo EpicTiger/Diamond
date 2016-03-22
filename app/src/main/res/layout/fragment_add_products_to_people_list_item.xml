@@ -28,7 +28,7 @@
                 android:textSize="16sp"/>
 
             <TextView
-                android:id="@+id/fragment_add_products_to_people_list_item_textview_price"
+                android:id="@+id/fragment_add_products_to_people_list_item_textview_quantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -49,21 +49,16 @@
                 android:id="@+id/fragment_add_products_to_people_list_item_button_less"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="@drawable/ic_keyboard_arrow_left_black_24dp"/>
-
-            <TextView
-                android:id="@+id/fragment_add_products_to_people_list_item_textview_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ic_remove_black_24dp"/>
 
             <Button
                 android:id="@+id/fragment_add_products_to_people_list_item_button_more"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="@drawable/ic_keyboard_arrow_right_black_24dp"/>
+                android:layout_marginStart="8dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ic_add_black_24dp"/>
 
         </LinearLayout>
     </LinearLayout>
