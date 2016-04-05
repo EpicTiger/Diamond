@@ -1,4 +1,4 @@
-package diamond.schmitt.com.diamond;
+package Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import butterknife.Bind;
+import diamond.schmitt.com.diamond.R;
 
 public abstract class BaseListFragment extends BaseFragment
 {

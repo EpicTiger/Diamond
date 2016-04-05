@@ -22,7 +22,16 @@ import java.util.List;
 import Entities.Order;
 import Entities.People;
 import Entities.Product;
-import Util.Util;
+import Fragments.AddOrderFragment;
+import Fragments.AddPeopleFragment;
+import Fragments.AddPeopleToOrderFragment;
+import Fragments.AddProductFragment;
+import Fragments.AddProductsToPeopleFragment;
+import Fragments.HomeFragment;
+import Fragments.OrderFragment;
+import Fragments.PeopleFragment;
+import Fragments.ProductFragment;
+import Util.UtilHelper;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -49,8 +58,8 @@ public class MainActivity extends AppCompatActivity
 
         setupDrawerLayout();
 
-        Util.orders = retrieveOrders();
-        if (Util.orders == null)
+        UtilHelper.orders = retrieveOrders();
+        if (UtilHelper.orders == null)
         {
             List<Order> orders = new ArrayList<>();
             saveOrders(orders);
@@ -175,26 +184,26 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void addPeopleToOrderFragment(Order order)
-{
-    FragmentTransaction ft = getFragmentManager().beginTransaction();
+    {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
 
-    AddPeopleToOrderFragment frag = new AddPeopleToOrderFragment();
+        AddPeopleToOrderFragment frag = new AddPeopleToOrderFragment();
 
-    Bundle bundles = new Bundle();
+        Bundle bundles = new Bundle();
 
-    if (order != null)
-        bundles.putSerializable("Order", order);
+        if (order != null)
+            bundles.putSerializable("Order", order);
 
-    frag.setArguments(bundles);
+        frag.setArguments(bundles);
 
-    ft.replace(R.id.fragmentParentViewGroup, frag, String.valueOf(R.string.nav_fragment_add_people_to_orders));
-    ft.addToBackStack(String.valueOf(R.string.nav_fragment_add_people_to_orders));
-    ft.commit();
+        ft.replace(R.id.fragmentParentViewGroup, frag, String.valueOf(R.string.nav_fragment_add_people_to_orders));
+        ft.addToBackStack(String.valueOf(R.string.nav_fragment_add_people_to_orders));
+        ft.commit();
 
 
-    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-    drawer.closeDrawer(GravityCompat.START);
-}
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+    }
 
     public void addProductsToPeopleFragment(People people)
     {

@@ -1,4 +1,4 @@
-package diamond.schmitt.com.diamond;
+package Fragments;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import diamond.schmitt.com.diamond.MainActivity;
 
 public class BaseFragment extends Fragment
 {

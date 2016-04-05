@@ -20,6 +20,7 @@ public class People implements Serializable
     private double subTotal;
     private int orderPosition;
     private int peopleQuantity;
+    private boolean hasPaid;
 
     public String getName()
     {
@@ -89,5 +90,15 @@ public class People implements Serializable
     public void setPeopleQuantity(int peopleQuantity)
     {
         this.peopleQuantity = peopleQuantity;
+    }
+
+    public boolean isHasPaid()
+    {
+        return hasPaid;
+    }
+
+    public void setHasPaid(boolean hasPaid)
+    {
+        this.hasPaid = hasPaid;
     }
 }

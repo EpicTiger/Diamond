@@ -1,4 +1,4 @@
-package diamond.schmitt.com.diamond;
+package Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +16,8 @@ import java.util.List;
 
 import Entities.Product;
 import butterknife.Bind;
+import diamond.schmitt.com.diamond.MainActivity;
+import diamond.schmitt.com.diamond.R;
 
 public class AddProductFragment extends BaseFragment
 {

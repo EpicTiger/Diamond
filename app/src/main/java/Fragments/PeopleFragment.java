@@ -1,23 +1,21 @@
-package diamond.schmitt.com.diamond;
+package Fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import Adapters.PeopleAdapter;
+import Entities.Order;
 import Entities.People;
-import butterknife.Bind;
+import Util.UtilHelper;
+import diamond.schmitt.com.diamond.MainActivity;
+import diamond.schmitt.com.diamond.R;
 
 public class PeopleFragment extends BaseListFragment
 {
@@ -71,12 +69,40 @@ public class PeopleFragment extends BaseListFragment
                 ((MainActivity) getActivity()).addEditPeopleFragment(people);
                 return true;
             case R.id.delete:
-                peoples.remove(info.position);
-                ((MainActivity) getActivity()).savePeoples(peoples);
-                fillList();
+                deletePeople(info, peoples);
                 return true;
             default:
                 return super.onContextItemSelected(item);
+        }
+    }
+
+
+    private void deletePeople(AdapterView.AdapterContextMenuInfo info,  List<People> peoples)
+    {
+        String oldName = peoples.get(info.position).getName();
+        peoples.remove(info.position);
+        ((MainActivity) getActivity()).savePeoples(peoples);
+        fillList();
+
+        List<Order> orders = ((MainActivity) getActivity()).retrieveOrders();
+        if (orders != null)
+        {
+            for (Order order : orders)
+            {
+                List<People> peoplesOrders = order.getPeoples();
+                if (peoplesOrders != null)
+                {
+                    for (int i = 0; i < peoplesOrders.size(); i++)
+                    {
+                        if (peoplesOrders.get(i).getName().equals(oldName))
+                        {
+                            peoplesOrders.remove(i);
+                        }
+                    }
+                }
+            }
+            UtilHelper.orders = orders;
+            ((MainActivity) getActivity()).saveOrders(orders);
         }
     }
 }

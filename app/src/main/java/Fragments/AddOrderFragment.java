@@ -1,7 +1,6 @@
-package diamond.schmitt.com.diamond;
+package Fragments;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -26,8 +25,11 @@ import Entities.Order;
 import Entities.People;
 import Entities.PeopleProduct;
 import Entities.Product;
-import Util.Util;
+import Util.UtilHelper;
+import Util.WhatsappShare;
 import butterknife.Bind;
+import diamond.schmitt.com.diamond.MainActivity;
+import diamond.schmitt.com.diamond.R;
 
 public class AddOrderFragment extends BaseFragment
 {
@@ -37,12 +39,15 @@ public class AddOrderFragment extends BaseFragment
     FloatingActionButton floatingActionButton_Done;
     @Bind(R.id.fragment_add_product_textview_date)
     TextView textView_Date;
+    @Bind(R.id.fragment_add_order_textview_total_price)
+    TextView textView_TotalPrice;
+    @Bind(R.id.fragment_add_order_view_total_price)
+    View view_TotalPrice;
     @Bind(R.id.fragment_add_order_button_date)
     ImageView imageView_DateButton;
     @Bind(R.id.fragment_add_order_listview)
     ListView listView;
 
-    private Calendar calendar;
     private Order order;
     private ArrayList<PeopleProduct> peopleProducts;
 
@@ -56,20 +61,10 @@ public class AddOrderFragment extends BaseFragment
             @Override
             public void onClick(View v)
             {
-                if (order == null)
-                {
-                    order = new Order(calendar, null);
-                    Util.orders.add(order);
-                    order.setPosition(Util.orders.indexOf(order));
-                }
+                order.setPosition(UtilHelper.orders.indexOf(order));
+                ((MainActivity) getActivity()).saveOrders(UtilHelper.orders);
+                ((MainActivity) getActivity()).addPeopleToOrderFragment(order);
 
-                if (order.getCalender() == null)
-                    showSnackbarLong("Please select a date");
-                else
-                {
-                    ((MainActivity) getActivity()).saveOrders(Util.orders);
-                    ((MainActivity) getActivity()).addPeopleToOrderFragment(order);
-                }
             }
         });
 
@@ -78,20 +73,8 @@ public class AddOrderFragment extends BaseFragment
             @Override
             public void onClick(View v)
             {
-                if (order == null)
-                {
-                    order = new Order(calendar, null);
-                    Util.orders.add(order);
-                    order.setPosition(Util.orders.indexOf(order));
-                }
-
-                if (order.getCalender() == null)
-                    showSnackbarLong("Please select a date");
-                else
-                {
-                    ((MainActivity) getActivity()).saveOrders(Util.orders);
-                    getActivity().getFragmentManager().popBackStack();
-                }
+                ((MainActivity) getActivity()).saveOrders(UtilHelper.orders);
+                getActivity().getFragmentManager().popBackStack();
             }
         });
 
@@ -106,7 +89,7 @@ public class AddOrderFragment extends BaseFragment
                     people.setOrderPosition(order.getPosition());
                     int peopleCount = 0;
 
-                    for (PeopleProduct peopleProduct: peopleProducts                         )
+                    for (PeopleProduct peopleProduct : peopleProducts)
                     {
                         if (peopleProduct.isPeople())
                             peopleCount++;
@@ -127,6 +110,8 @@ public class AddOrderFragment extends BaseFragment
                 setDateTimeField();
             }
         });
+        view_TotalPrice.setVisibility(View.GONE);
+        textView_TotalPrice.setVisibility(View.GONE);
 
         return view;
     }
@@ -136,8 +121,22 @@ public class AddOrderFragment extends BaseFragment
     {
         super.onResume();
         if (order != null)
-            textView_Date.setText(Util.DateFormat.format(order.getCalender().getTime()));
-        fillList();
+        {
+            textView_Date.setText(UtilHelper.DateFormat.format(order.getCalender().getTime()));
+            fillList();
+        } else
+        {
+            createNewOrder();
+        }
+    }
+
+    private void createNewOrder()
+    {
+        Calendar calendar = UtilHelper.DateToCalendar(Calendar.getInstance().getTime());
+        order = new Order(calendar, null);
+        textView_Date.setText(String.valueOf(UtilHelper.DateFormat.format(order.getCalender().getTime())));
+        UtilHelper.orders.add(order);
+        ((MainActivity) getActivity()).saveOrders(UtilHelper.orders);
     }
 
     private void setDateTimeField()
@@ -153,15 +152,38 @@ public class AddOrderFragment extends BaseFragment
             {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
-                calendar = newDate;
-                textView_Date.setText(Util.DateFormat.format(newDate.getTime()));
+                textView_Date.setText(UtilHelper.DateFormat.format(newDate.getTime()));
                 if (order != null)
-                    Util.orders.get(order.getPosition()).setCalender(newDate);
+                    UtilHelper.orders.get(order.getPosition()).setCalender(newDate);
             }
 
         }, year, month, day);
 
         datePickerDialog.show();
+    }
+
+    private void getTotalPrice()
+    {
+        List<People> peoples;
+        double totalPrice = 0.0;
+
+        if (order != null)
+        {
+            peoples = order.getPeoples();
+            if (peoples != null)
+            {
+                for (People people : peoples)
+                {
+                    totalPrice += people.getSubTotal();
+                }
+            }
+        }
+        if (totalPrice != 0.0)
+        {
+            textView_TotalPrice.setText(UtilHelper.getPriceString(totalPrice));
+            view_TotalPrice.setVisibility(View.VISIBLE);
+            textView_TotalPrice.setVisibility(View.VISIBLE);
+        }
     }
 
     private void fillList()
@@ -204,31 +226,6 @@ public class AddOrderFragment extends BaseFragment
         }
     }
 
-    private String getOrderInText()
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(String.valueOf(Util.DateFormat.format(order.getCalender().getTime())) + System.getProperty("line.separator"));
-        stringBuilder.append("---------------------------" + System.getProperty("line.separator"));
-        stringBuilder.append(System.getProperty("line.separator"));
-        for (People people : order.getPeoples())
-        {
-            stringBuilder.append(people.getName() + " - €" + people.getSubTotal() + System.getProperty("line.separator"));
-
-            for (Product product : people.getProducts())
-            {
-                if (product.getQuantity() != 0)
-                {
-                    stringBuilder.append("-   " + product.getName() + System.getProperty("line.separator"));
-                    stringBuilder.append("    " + product.getQuantity() + "x - €" + product.getPriceString() + System.getProperty("line.separator"));
-                    stringBuilder.append(System.getProperty("line.separator"));
-                }
-            }
-            stringBuilder.append("---------------------------" + System.getProperty("line.separator"));
-            stringBuilder.append(System.getProperty("line.separator"));
-        }
-
-        return stringBuilder.toString();
-    }
 
     private void setAndFillListAdapter(List<PeopleProduct> list)
     {
@@ -236,6 +233,7 @@ public class AddOrderFragment extends BaseFragment
         {
             PeopleProductAdapter adapter = new PeopleProductAdapter(getActivity(), R.id.fragment_add_order_listview, list);
             listView.setAdapter(adapter);
+            getTotalPrice();
         }
     }
 
@@ -248,15 +246,6 @@ public class AddOrderFragment extends BaseFragment
             order = (Order) bundle.getSerializable("Order");
     }
 
-    private void shareToWhatsapp()
-    {
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, getOrderInText());
-        sendIntent.setType("text/plain");
-        sendIntent.setPackage("com.whatsapp");
-        startActivity(sendIntent);
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
@@ -271,7 +260,7 @@ public class AddOrderFragment extends BaseFragment
         switch (item.getItemId())
         {
             case R.id.menu_item_share:
-                shareToWhatsapp();
+                WhatsappShare.shareToWhatsapp(order, getActivity());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Diamonds</string>
+    <string name="app_name">Diamond</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -31,5 +31,7 @@
     <string name="Cancel">Cancel</string>
     <string name="Save">Save</string>
     <string name="Date">Date</string>
+    <string name="NewestOrders">Newest Orders</string>
+    <string name="UnpaidOrder">Unpaid Orders</string>
 
 </resources>

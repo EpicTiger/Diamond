@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/fragment_order_list_item_textview_date"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="@dimen/single_line_list_specs"
         android:gravity="center_vertical"
         android:textColor="@color/black"/>
 

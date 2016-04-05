@@ -1,9 +1,7 @@
-package diamond.schmitt.com.diamond;
+package Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.text.method.CharacterPickerDialog;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -11,17 +9,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import Adapters.OrderAdapter;
 import Entities.Order;
-import Entities.People;
-import Entities.Product;
-import Util.Util;
-import butterknife.Bind;
+import Util.UtilHelper;
+import diamond.schmitt.com.diamond.MainActivity;
+import diamond.schmitt.com.diamond.R;
 
 public class OrderFragment extends BaseListFragment
 {
@@ -38,7 +34,7 @@ public class OrderFragment extends BaseListFragment
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                Order order = Util.orders.get(position);
+                Order order = UtilHelper.orders.get(position);
                 order.setPosition(position);
                 ((MainActivity) getActivity()).addOrderFragment(order);
             }
@@ -78,12 +74,11 @@ public class OrderFragment extends BaseListFragment
     public boolean onContextItemSelected(MenuItem item)
     {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        List<Order> orders = ((MainActivity) getActivity()).retrieveOrders();
         switch (item.getItemId())
         {
             case R.id.delete:
-                orders.remove(info.position);
-                ((MainActivity) getActivity()).saveOrders(orders);
+                UtilHelper.orders.remove(info.position);
+                ((MainActivity) getActivity()).saveOrders(UtilHelper.orders);
                 fillList();
                 return true;
             default:

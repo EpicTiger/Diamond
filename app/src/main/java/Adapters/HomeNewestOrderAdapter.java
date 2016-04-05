@@ -14,12 +14,12 @@ import Entities.Order;
 import Util.UtilHelper;
 import diamond.schmitt.com.diamond.R;
 
-public class OrderAdapter extends ArrayAdapter<Order>
+public class HomeNewestOrderAdapter extends ArrayAdapter<Order>
 {
     private final Context context;
     private List<Order> objects;
 
-    public OrderAdapter(Context context, int resource, List<Order> objects)
+    public HomeNewestOrderAdapter(Context context, int resource, List<Order> objects)
     {
         super(context, resource, objects);
         this.context = context;

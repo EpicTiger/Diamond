@@ -11,4 +11,12 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
+    <!-- single line list item -->
+    <dimen name="dense_single_line_list_specs">40dp</dimen>
+    <dimen name="single_line_list_specs">48dp</dimen>
+
+    <!-- two line list item -->
+    <dimen name="dense_two_line_list_specs">60dp</dimen>
+    <dimen name="two_line_list_specs">72dp</dimen>
+
 </resources>

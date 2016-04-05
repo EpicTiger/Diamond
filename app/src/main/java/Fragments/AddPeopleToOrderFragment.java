@@ -1,4 +1,4 @@
-package diamond.schmitt.com.diamond;
+package Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,7 +14,9 @@ import java.util.List;
 import Adapters.PeopleToOrderAdapter;
 import Entities.Order;
 import Entities.People;
-import Util.Util;
+import Util.UtilHelper;
+import diamond.schmitt.com.diamond.MainActivity;
+import diamond.schmitt.com.diamond.R;
 
 public class AddPeopleToOrderFragment extends BaseListFragment
 {
@@ -32,8 +34,8 @@ public class AddPeopleToOrderFragment extends BaseListFragment
             @Override
             public void onClick(View v)
             {
-                Util.orders.get(order.getPosition()).setPeoples(peoples);
-                ((MainActivity) getActivity()).saveOrders(Util.orders);
+                UtilHelper.orders.get(order.getPosition()).setPeoples(peoples);
+                ((MainActivity) getActivity()).saveOrders(UtilHelper.orders);
                 getActivity().onBackPressed();
             }
         });

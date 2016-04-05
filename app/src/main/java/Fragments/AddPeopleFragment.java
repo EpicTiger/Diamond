@@ -1,4 +1,4 @@
-package diamond.schmitt.com.diamond;
+package Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,7 +8,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -17,9 +16,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import Entities.Order;
 import Entities.People;
 import Entities.Product;
+import Util.UtilHelper;
 import butterknife.Bind;
+import diamond.schmitt.com.diamond.MainActivity;
+import diamond.schmitt.com.diamond.R;
 
 public class AddPeopleFragment extends BaseFragment
 {
@@ -28,6 +31,7 @@ public class AddPeopleFragment extends BaseFragment
     @Bind(R.id.fragment_add_people_floatingactionbutton_done)
     FloatingActionButton floatingActionButton_Done;
     private People people;
+    private String oldName;
 
     @Nullable
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -72,7 +76,7 @@ public class AddPeopleFragment extends BaseFragment
 
         if (peoples == null)
         {
-            peoples = new ArrayList<People>();
+            peoples = new ArrayList<>();
         }
 
         String name = String.valueOf(editText_Name.getText());
@@ -90,6 +94,34 @@ public class AddPeopleFragment extends BaseFragment
         } else
         {
             showSnackbarShort("Please add a name");
+        }
+
+        changeNamesInOrders();
+    }
+
+    private void changeNamesInOrders()
+    {
+        String name = String.valueOf(editText_Name.getText());
+        List<Order> orders = ((MainActivity) getActivity()).retrieveOrders();
+        if (orders != null)
+        {
+            for (Order order : orders)
+            {
+                List<People> peoples = order.getPeoples();
+                if (peoples != null)
+                {
+                    for (People people : peoples)
+                    {
+                        if (people.getName().equals(oldName))
+                        {
+                            if (name != null && !name.isEmpty())
+                                people.setName(name);
+                        }
+                    }
+                }
+            }
+            UtilHelper.orders = orders;
+            ((MainActivity) getActivity()).saveOrders(orders);
         }
     }
 
@@ -111,7 +143,11 @@ public class AddPeopleFragment extends BaseFragment
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getArguments();
         if (bundle != null)
+        {
             people = (People) bundle.getSerializable("People");
+            if (people != null)
+                oldName = people.getName();
+        }
     }
 
     @Override

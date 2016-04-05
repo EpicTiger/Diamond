@@ -1,7 +1,6 @@
-package diamond.schmitt.com.diamond;
+package Fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,9 @@ import Adapters.ProductsToPeopleAdapter;
 import Entities.People;
 import Entities.PeopleProduct;
 import Entities.Product;
-import Util.Util;
+import Util.UtilHelper;
+import diamond.schmitt.com.diamond.MainActivity;
+import diamond.schmitt.com.diamond.R;
 
 public class AddProductsToPeopleFragment extends BaseListFragment
 {
@@ -31,8 +32,8 @@ public class AddProductsToPeopleFragment extends BaseListFragment
             @Override
             public void onClick(View v)
             {
-                Util.orders.get(people.getOrderPosition()).getPeoples().get(getPeoplePosition()).setProducts(products);
-                ((MainActivity) getActivity()).saveOrders(Util.orders);
+                UtilHelper.orders.get(people.getOrderPosition()).getPeoples().get(getPeoplePosition()).setProducts(products);
+                ((MainActivity) getActivity()).saveOrders(UtilHelper.orders);
                 getActivity().onBackPressed();
             }
         });
@@ -54,7 +55,7 @@ public class AddProductsToPeopleFragment extends BaseListFragment
         products = ((MainActivity) getActivity()).retrieveProducts();
         int position = getPeoplePosition();
 
-        List<Product> peopleProducts = Util.orders.get(people.getOrderPosition()).getPeoples().get(position).getProducts();
+        List<Product> peopleProducts = UtilHelper.orders.get(people.getOrderPosition()).getPeoples().get(position).getProducts();
 
         if (products != null && !products.isEmpty())
         {
