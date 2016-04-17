@@ -12,7 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapters.ProductAdapter;
+import Entities.Order;
+import Entities.People;
 import Entities.Product;
+import Util.UtilHelper;
 import diamond.schmitt.com.diamond.MainActivity;
 import diamond.schmitt.com.diamond.R;
 
@@ -68,12 +71,44 @@ public class ProductFragment extends BaseListFragment
                 ((MainActivity) getActivity()).addEditProductFragment(product);
                 return true;
             case R.id.delete:
-                products.remove(info.position);
-                ((MainActivity) getActivity()).saveProducts(products);
-                fillList();
+                deleteProducts(info, products);
                 return true;
             default:
                 return super.onContextItemSelected(item);
+        }
+    }
+
+    private void deleteProducts(AdapterView.AdapterContextMenuInfo info, List<Product> products)
+    {
+        String oldName = products.get(info.position).getName();
+        products.remove(info.position);
+        ((MainActivity) getActivity()).saveProducts(products);
+        fillList();
+
+        List<Order> orders = ((MainActivity) getActivity()).retrieveOrders();
+        if (orders != null)
+        {
+            for (Order order : orders)
+            {
+                List<People> peoplesOrders = order.getPeoples();
+                if (peoplesOrders != null)
+                {
+                    for (People people : peoplesOrders)
+                    {
+                        List<Product> productList = people.getProducts();
+                        if (productList != null)
+                        {
+                            for (int i = 0; i < productList.size(); i++)
+                            {
+                                if (productList.get(i).getName().equals(oldName))
+                                    productList.remove(i);
+                            }
+                        }
+                    }
+                }
+            }
+            UtilHelper.orders = orders;
+            ((MainActivity) getActivity()).saveOrders(orders);
         }
     }
 }

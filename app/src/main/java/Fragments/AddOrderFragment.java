@@ -162,22 +162,10 @@ public class AddOrderFragment extends BaseFragment
         datePickerDialog.show();
     }
 
+
     private void getTotalPrice()
     {
-        List<People> peoples;
-        double totalPrice = 0.0;
-
-        if (order != null)
-        {
-            peoples = order.getPeoples();
-            if (peoples != null)
-            {
-                for (People people : peoples)
-                {
-                    totalPrice += people.getSubTotal();
-                }
-            }
-        }
+        double totalPrice = Util.PriceCalculator.getTotalPrice(order);
         if (totalPrice != 0.0)
         {
             textView_TotalPrice.setText(UtilHelper.getPriceString(totalPrice));

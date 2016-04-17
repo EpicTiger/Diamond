@@ -1,17 +1,22 @@
 package Adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 import Entities.Product;
+import diamond.schmitt.com.diamond.MainActivity;
 import diamond.schmitt.com.diamond.R;
 
 public class ProductsToPeopleAdapter extends ArrayAdapter<Product>
@@ -46,6 +51,8 @@ public class ProductsToPeopleAdapter extends ArrayAdapter<Product>
             TextView quantity = (TextView) v.findViewById(R.id.fragment_add_products_to_people_list_item_textview_quantity);
             Button less = (Button) v.findViewById(R.id.fragment_add_products_to_people_list_item_button_less);
             Button more = (Button) v.findViewById(R.id.fragment_add_products_to_people_list_item_button_more);
+            LinearLayout customQuanity = (LinearLayout) v.findViewById(R.id.fragment_add_products_to_people_list_item_custom_quantity);
+
 
             if (name != null)
                 name.setText(product.getName());
@@ -94,6 +101,45 @@ public class ProductsToPeopleAdapter extends ArrayAdapter<Product>
                     }
                 });
             }
+
+            customQuanity.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    final AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+                    final EditText input = new EditText(getContext());
+                    input.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                    if (product.getQuantity() != 0.0)
+                        input.setText(product.getQuantitystring());
+                    input.requestFocus();
+                    alert.setView(input);
+                    alert.setPositiveButton("Ok", new DialogInterface.OnClickListener()
+                    {
+                        public void onClick(DialogInterface dialog, int whichButton)
+                        {
+                            String value = String.valueOf(input.getText()).trim();
+                            try
+                            {
+                                product.setQuantity(Double.parseDouble(value.replace(",", ".")));
+                                input.setText(product.getQuantitystring());
+                            } catch (NumberFormatException ex)
+                            {
+                            }
+                            notifyDataSetChanged();
+                        }
+                    });
+
+                    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+                    {
+                        public void onClick(DialogInterface dialog, int whichButton)
+                        {
+                            dialog.cancel();
+                        }
+                    });
+                    alert.show();
+                }
+            });
         }
 
         return v;

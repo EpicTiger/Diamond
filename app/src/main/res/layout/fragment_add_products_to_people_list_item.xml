@@ -12,6 +12,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/fragment_add_products_to_people_list_item_custom_quantity"
             android:layout_width="0dp"
             android:layout_height="72dp"
             android:layout_weight="2"

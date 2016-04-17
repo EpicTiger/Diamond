@@ -43,16 +43,19 @@ public class OrderAdapter extends ArrayAdapter<Order>
         if (order != null)
         {
             TextView name = (TextView) v.findViewById(R.id.fragment_order_list_item_textview_date);
+            TextView price = (TextView) v.findViewById(R.id.fragment_order_list_item_textview_price);
 
             if (name != null)
             {
                 Calendar calendar = order.getCalender();
                 if (calendar != null)
                     name.setText(String.valueOf(UtilHelper.DateFormat.format(calendar.getTime())));
+
+                if (price != null)
+                    price.setText(Util.PriceCalculator.getTotalPriceString(order));
             }
         }
 
         return v;
     }
-
 }

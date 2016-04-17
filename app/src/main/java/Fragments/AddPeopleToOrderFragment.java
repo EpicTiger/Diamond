@@ -57,9 +57,28 @@ public class AddPeopleToOrderFragment extends BaseListFragment
         if (order.getPeoples() == null)
             peoples = ((MainActivity) getActivity()).retrievePeoples();
         else
-            peoples = order.getPeoples();
+        {
+            peoples = ((MainActivity) getActivity()).retrievePeoples();
+            List<People> orderPeople = order.getPeoples();
+            for (int i = 0; i < peoples.size(); i++)
+            {
+                for (int j = 0; j < orderPeople.size(); j++)
+                {
+                    if (peoples.get(i).getName().equals(orderPeople.get(j).getName()))
+                    {
+                        peoples.get(i).setIsSelected(orderPeople.get(j).isSelected());
+                        peoples.get(i).setOrderPosition(orderPeople.get(j).getOrderPosition());
+                        peoples.get(i).setPosition(orderPeople.get(j).getPosition());
+                        peoples.get(i).setProducts(orderPeople.get(j).getProducts());
+                        peoples.get(i).setHasPaid(orderPeople.get(j).isHasPaid());
+                        peoples.get(i).setSubTotal(orderPeople.get(j).getSubTotal());
+                        peoples.get(i).setPeopleQuantity(orderPeople.get(j).getPeopleQuantity());
+                    }
+                }
+            }
+        }
 
-        if (!(peoples != null ? peoples.isEmpty() : false))
+        if (!(peoples != null && peoples.isEmpty()))
         {
             setAndFillListAdapter(peoples);
         }

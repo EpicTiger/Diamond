@@ -4,13 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingEnd="@dimen/activity_horizontal_margin"
-    android:paddingStart="@dimen/activity_horizontal_margin"    >
+    android:paddingStart="@dimen/activity_horizontal_margin">
 
-    <TextView
-        android:id="@+id/fragment_order_list_item_textview_date"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/single_line_list_specs"
-        android:gravity="center_vertical"
-        android:textColor="@color/black"/>
+        android:layout_height="@dimen/two_line_list_specs"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/fragment_order_list_item_textview_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/fragment_order_list_item_textview_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

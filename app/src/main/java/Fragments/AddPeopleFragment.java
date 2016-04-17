@@ -30,6 +30,7 @@ public class AddPeopleFragment extends BaseFragment
     EditText editText_Name;
     @Bind(R.id.fragment_add_people_floatingactionbutton_done)
     FloatingActionButton floatingActionButton_Done;
+
     private People people;
     private String oldName;
 
@@ -148,11 +149,5 @@ public class AddPeopleFragment extends BaseFragment
             if (people != null)
                 oldName = people.getName();
         }
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
     }
 }

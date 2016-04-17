@@ -77,7 +77,7 @@ public class PeopleFragment extends BaseListFragment
     }
 
 
-    private void deletePeople(AdapterView.AdapterContextMenuInfo info,  List<People> peoples)
+    private void deletePeople(AdapterView.AdapterContextMenuInfo info, List<People> peoples)
     {
         String oldName = peoples.get(info.position).getName();
         peoples.remove(info.position);
@@ -95,9 +95,7 @@ public class PeopleFragment extends BaseListFragment
                     for (int i = 0; i < peoplesOrders.size(); i++)
                     {
                         if (peoplesOrders.get(i).getName().equals(oldName))
-                        {
                             peoplesOrders.remove(i);
-                        }
                     }
                 }
             }

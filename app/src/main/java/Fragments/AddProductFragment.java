@@ -14,7 +14,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import Entities.Order;
+import Entities.People;
 import Entities.Product;
+import Util.UtilHelper;
 import butterknife.Bind;
 import diamond.schmitt.com.diamond.MainActivity;
 import diamond.schmitt.com.diamond.R;
@@ -29,6 +32,7 @@ public class AddProductFragment extends BaseFragment
     FloatingActionButton floatingActionButton_Done;
 
     private Product product;
+    private String oldName;
 
     @Nullable
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -104,8 +108,42 @@ public class AddProductFragment extends BaseFragment
             hideKeyboard();
             getActivity().onBackPressed();
         }
+
+        changeNamesInOrders();
     }
 
+    private void changeNamesInOrders()
+    {
+        String name = String.valueOf(editText_Name.getText());
+        List<Order> orders = ((MainActivity) getActivity()).retrieveOrders();
+        if (orders != null)
+        {
+            for (Order order : orders)
+            {
+                List<People> peoples = order.getPeoples();
+                if (peoples != null)
+                {
+                    for (People people : peoples)
+                    {
+                        if (people != null)
+                        {
+                            List<Product> products = people.getProducts();
+                            for (Product product : products)
+                            {
+                                if (product.getName().equals(oldName))
+                                {
+                                    if (name != null && !name.isEmpty())
+                                        product.setName(name);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            UtilHelper.orders = orders;
+            ((MainActivity) getActivity()).saveOrders(orders);
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -114,12 +152,7 @@ public class AddProductFragment extends BaseFragment
         Bundle bundle = this.getArguments();
         if (bundle != null)
             product = (Product) bundle.getSerializable("Product");
-    }
-
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
+        if (product != null)
+            oldName = product.getName();
     }
 }
